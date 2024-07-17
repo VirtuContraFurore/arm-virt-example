@@ -28,6 +28,10 @@ SECTIONS {
         _stack_end = .;
         . = . + _stack_size;
         _stack_start = .;  /* since stack grows towards smaller address, higher address is stack start! */
+        . = ALIGN(16);
+        _guest_stack_end = .;
+        . = . + _stack_size;
+        _guest_stack_start = .;  /* since stack grows towards smaller address, higher address is stack start! */
     }    
 
 }

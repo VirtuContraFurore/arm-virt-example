@@ -2,6 +2,7 @@ CROSS_COMPILE = aarch64-linux-gnu-
 CC = $(CROSS_COMPILE)gcc
 LD = $(CROSS_COMPILE)ld
 AS = $(CROSS_COMPILE)as
+DUMP = $(CROSS_COMPILE)objdump
 
 
 SRC_FILES := $(wildcard src/*.c)
@@ -21,5 +22,10 @@ hypervisor.elf: build/start.o $(OBJ_FILES) linker.ld
 
 clean:
 	rm -f build/start.o $(OBJ_FILES) hypervisor.elf
+
+hypervisor.dis: hypervisor.elf
+	$(DUMP) -D $< > $@
+
+all: hypervisor.elf hypervisor.dis
 
 .PHONY: all clean
