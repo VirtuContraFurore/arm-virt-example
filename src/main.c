@@ -17,6 +17,8 @@ void hypervisor_exception_vector();
 void install_el2_vbar();
 void start_guest_VM();
 
+volatile int test_bss = 0;
+
 void guest_main(){
     puts("GUEST: hello main!");
     for(int i=0; i<5;i++){
@@ -29,6 +31,10 @@ void guest_main(){
 }
 
 void main() {
+    if(test_bss)
+        puts("BSS not zeroed!");
+    else
+        puts("BSS zeroed");
     if(check_execution_level() != EL2)
         return;
     install_el2_vbar();
